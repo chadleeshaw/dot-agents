@@ -36,7 +36,7 @@ A daily record of finished work, one line per item: `~/.agents/log/YYYY-MM-DD-lo
   - **<claude | pi | opencode | chad>** · `<repo or host>` — <what changed, in plain words> ([commit / MR / ticket](url))
   ```
 
-- **If today's file doesn't exist**, create it from the vault template `_templates/Captains Log Template.md`: replace each `<% tp.date.now("FORMAT") %>` with today's date in that format — `<% tp.date.now("FORMAT", N) %>` means today shifted by N days (moment.js formats; `DDDD` is day of year, e.g. 266).
+- **If today's file doesn't exist**, create it from the vault template `_templates/Captains Log Template.md`: drop the leading `<%* … -%>` block, then replace each `<% d("FORMAT") %>` with the log's date in that format — `<% d("FORMAT", N) %>` means that date shifted by N days (moment.js formats; `DDDD` is day of year, e.g. 266).
 - **The log covers the whole day, not one session.** Every session and every harness writes to the same file. When asked whether the day's log is complete, check all of that day's sessions, not just the current one: Claude `~/.claude/projects/*/*.jsonl`, pi `~/.pi/agent/sessions/`, opencode `~/.local/share/opencode/storage/session/`. Skip headless test runs.
 - One line per finished item, not per session. Skip trivia (reading files, dead ends). Link the artifact when there is one.
 - The log records what happened. Lessons that should change future behavior go to Shared Memory.
