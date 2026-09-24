@@ -1,25 +1,16 @@
 ---
-description: Load AI context notes from Obsidian (_ai/me, environment, infrastructure, workflows, agents, team)
+description: Load Chad's AI context notes from Obsidian (agents, environment, and company infrastructure, team, workflows)
 ---
 
-Read and internalize the following context notes about Chad and his environment:
+Read and internalize these context notes from the Obsidian vault (`_ai/` in the Notes vault):
 
-## me.md
-!`obsidian read path="_ai/me.md"`
+## agents.md — who you work for and how
+!`cat "$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/_ai/agents.md"`
 
-## environment.md
-!`obsidian read path="_ai/environment.md"`
+## environment.md — local machine, harnesses, tools, auth
+!`cat "$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/_ai/environment.md"`
 
-## infrastructure.md
-!`obsidian read path="_ai/infrastructure.md"`
+## Company notes — infrastructure, team, workflows (from the company folder named in agents.md)
+!`for f in "$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/_ai"/*/{infrastructure,team,workflows}.md; do [ -f "$f" ] && { echo "### ${f##*/_ai/}"; cat "$f"; }; done`
 
-## workflows.md
-!`obsidian read path="_ai/workflows.md"`
-
-## claude.md
-!`obsidian read path="_ai/claude.md"`
-
-## team.md
-!`obsidian read path="_ai/team.md"`
-
-Use these notes as the source of truth for Chad's background, local environment, work infrastructure, workflows, and team for the rest of this session.
+Use these notes as the source of truth for the rest of this session. Tool pages load on demand: general tools in `_ai/tools/`, company systems in `_ai/<company>/tools/`.

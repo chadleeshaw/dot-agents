@@ -196,7 +196,7 @@ apps:
 
 Use the local manifest rendering CLI for your deployment repo.
 Always run it from the app directory (the one containing the app manifest/config file).
-See `_ai/tools/` in your Obsidian vault for tool-specific details.
+See the manifest-rendering tool page under `_ai/<company>/tools/` in your Obsidian vault for the exact commands.
 
 ```bash
 cd <deployments-repo>/<team>/<app-name>

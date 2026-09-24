@@ -12,6 +12,8 @@ Cloned to `~/.agents` and symlinked into each harness by `setup.sh`.
 ├── commands/     # Slash commands (/shipit, /test, ...)
 ├── skills/       # Language/domain skills loaded on demand
 ├── templates/    # Format templates (ADR, Context Modeling)
+├── context.md    # Global instructions for pi and opencode (incl. shared memory rules)
+├── memory/       # -> Obsidian _ai/memories/ (symlink, gitignored)
 └── setup.sh      # Idempotent install script
 ```
 
@@ -23,6 +25,31 @@ git clone git@github.com:chadleeshaw/dot-opencode.git ~/.agents
 ```
 
 `setup.sh` symlinks everything into place. Safe to re-run.
+
+## Shared memory
+
+Claude Code, pi, and opencode share one memory that lives in the Obsidian vault
+(`_ai/memories/`), so a fact learned in any harness, in any repo, is known to all
+of them. `setup.sh` wires it up:
+
+| Harness | Index loaded via | Rules from |
+|---|---|---|
+| Claude Code | `autoMemoryDirectory: ~/.agents/memory` in `~/.claude/settings.json` | built-in auto memory + `~/.claude/CLAUDE.md` |
+| pi | `~/.pi/agent/APPEND_SYSTEM.md` -> `memory/MEMORY.md` | `~/.pi/agent/AGENTS.md` -> `context.md` |
+| opencode | `instructions` in `~/.config/opencode/opencode.json` | `context.md` (also in `instructions`) |
+
+`memory/MEMORY.md` is the index (one line per memory, loaded every session);
+each memory is a `<slug>.md` note. Browse and edit them in Obsidian via
+`_ai/memories.md`. Override the vault location with `OBSIDIAN_VAULT=... ./setup.sh`.
+
+## Private skills
+
+Proprietary skills must never reach GitHub. They live in
+the Obsidian vault at `_ai/skills/<name>/` and `setup.sh` symlinks each one into
+`skills/`, adding its name to `.git/info/exclude` — a local-only ignore file — so
+neither the content nor the name is ever committed. Eval workspaces
+(`skills/*-workspace/`) are ignored too. To add one: create it in `_ai/skills/`
+and re-run `setup.sh`.
 
 ## Agents
 
@@ -49,7 +76,7 @@ Slash commands in `commands/` are invoked manually with `/name`.
 
 | Command | Purpose |
 |---|---|
-| `/context` | Load AI context notes from Obsidian (_ai/me, environment, infrastructure, workflows, team) |
+| `/context` | Load AI context notes from Obsidian (`_ai/agents`, `environment`, and the company folder's infrastructure, team, workflows) |
 | `/review` | Review staged and unstaged changes against applicable coding skills and best practices |
 | `/shipit` | Stage, commit, and push changes with an auto-generated message |
 | `/simplify` | Refactor selected code for clarity and simplicity |
@@ -63,7 +90,6 @@ Skills in `skills/` are auto-triggered when a task matches their domain.
 | Skill | Loaded for |
 |---|---|
 | `caveman` | Ultra-compressed communication mode |
-| `computer-use` | Desktop app inspection and UI operation via Orca |
 | `css` | CSS best practices |
 | `design-taste-frontend` | Anti-slop frontend and design system guidance |
 | `find-skills` | Discover and install agent skills |
@@ -73,8 +99,6 @@ Skills in `skills/` are auto-triggered when a task matches their domain.
 | `javascript` | JS/TS best practices |
 | `kubernetes` | kubectl, pods, deployments, ArgoCD, helmfile, and Kafka on k8s |
 | `obsidian` | Obsidian notes and knowledge management |
-| `orca-cli` | Orca worktree, terminal, and automation control |
-| `orchestration` | Multi-agent coordination and DAG workflows via Orca |
 | `python` | Python best practices |
 | `saltstack` | SaltStack states, formulas, pillar, and configuration management |
 | `terraform` | Terraform HCL, modules, and infrastructure as code |

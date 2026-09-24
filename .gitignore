@@ -1,0 +1,10 @@
+# Shared agent memory: symlink into the Obsidian vault, created by setup.sh.
+# Contents are private work notes and never belong in this repo.
+/memory
+/log
+
+# Skill-eval workspaces (skill-creator writes <skill>-workspace/ next to the skill)
+/skills/*-workspace/
+# Private skills are symlinks into the vault; setup.sh lists each one in .git/info/exclude
+# Skills synced from claude.ai — managed by the sync, not source; may include private skills
+/skills/synced/

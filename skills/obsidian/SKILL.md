@@ -44,8 +44,10 @@ obsidian recents
 
 | Folder | Purpose |
 |---|---|
-| `_ai/` | Agent context — environment, team, infrastructure, workflows |
-| `_ai/tools/` | Tool-specific notes (kafka, kubefwd, mrmeseeks, etc.) |
+| `_ai/` | Agent context — `agents.md`, `environment.md`, `memories.md`; index in `README.md` |
+| `_ai/<company>/` | Company context — infrastructure, team, workflows (folder named in `_ai/agents.md`) |
+| `_ai/tools/`, `_ai/<company>/tools/` | Tool pages — general tools and company systems |
+| `_ai/memories/` | Shared agent memory — one note per memory plus the `MEMORY.md` index |
 | `work/` | Work notes |
 | `programming/` | Dev references |
 | `_archive/` | Old notes |
@@ -53,6 +55,6 @@ obsidian recents
 ## Frontmatter conventions
 
 ```yaml
-type: note|project|meeting|reference|dashboard|ai-context
+type: note|project|meeting|reference|dashboard|ai-context|ai-tool|ai-memory
 status: active|someday|done|archived
 ```
